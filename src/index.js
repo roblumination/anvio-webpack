@@ -1,5 +1,5 @@
 // import "./sass/index.scss";
-import "./sass/styles.scss";
+require("./sass/styles.scss");
 
 // const requiredPages = ["header", "footer"].map(
 //   (page) => require("./html/" + page + ".html").default

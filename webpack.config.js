@@ -1,5 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ESLintPlugin = require("eslint-webpack-plugin");
 
 const loaders = [
   {
@@ -8,7 +9,19 @@ const loaders = [
   },
   {
     test: /\.s[ac]ss$/,
-    use: ["style-loader", "css-loader", "sass-loader"],
+    use: [
+      "style-loader",
+      "css-loader",
+      {
+        loader: "sass-loader",
+        options: {
+          sourceMap: true,
+          sassOptions: {
+            outputStyle: "compressed",
+          },
+        },
+      },
+    ],
   },
   // {
   //   test: /\.html$/i,
@@ -26,6 +39,7 @@ const plugins = [
     filename: "index.html",
     template: "./src/index.html",
   }),
+  new ESLintPlugin(),
 ];
 
 module.exports = {

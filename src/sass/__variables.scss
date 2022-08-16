@@ -1,0 +1,60 @@
+@mixin useImage($name, $path: "/src/assets/") {
+  background: url($path + $name);
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+@mixin useIco($name) {
+  @include useImage($name, "/src/assets/icons/");
+}
+
+@mixin useCompactScroll() {
+  &::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #8888;
+    background: linear-gradient(#8880 0% 7%, #8888 11% 87%, #8880 90%);
+    // box-shadow: inset -2px 0 0 #fff, inset 2px 0 0 #fff;
+    border-radius: 7px;
+
+    &:hover {
+      // box-shadow: inset -0px 0 0 #fff, inset 0px 0 0 #fff;
+    }
+
+    &:active {
+      // background-color: #aaa;
+    }
+  }
+
+  &::-webkit-scrollbar-button {
+    width: 20px;
+    height: 20px;
+    background-color: #0000;
+  }
+}
+
+$background: #eeeeee;
+$main: #ce2127;
+
+//header
+$header-height-small: 50px;
+$header-height-big: 70px;
+$header-heigh: 50px;
+
+@media screen and (min-width: 1280px) {
+  $header-heigh: 70px;
+}
+
+//modal
+$modal-bg-opacity: 0.5;
+$modal-shadow: 0 20px 50px rgba(#000, 0.15);
+
+//fonts
+$sans: "Euclid Circular A";
+
+//screen sizes
+$screen-small: 720px;
+$screen-medium: 1024px;
+$screen-big: 1280px;

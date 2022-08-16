@@ -1,0 +1,60 @@
+@import url(//db.onlinewebfonts.com/c/a575313c6dc4fd00c1a9506e1c3ea4fc?family=Euclid+Circular+A);
+
+@import "__variables";
+@import "buttons";
+@import "header";
+@import "modal";
+
+@import "01_intro";
+@import "02_plan";
+@import "03_info";
+@import "04_entertain";
+
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background-color: $background;
+  font-family: $sans;
+  min-height: 120vh;
+  font-size: 14px;
+}
+
+.small_only {
+  display: block;
+
+  @media screen and (min-width: $screen-small) {
+    display: none;
+  }
+}
+
+.construct_img {
+  width: 100px;
+  height: 100px;
+}
+
+.constr_block {
+  height: 600px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  align-items: center;
+  font-size: 36px;
+  font-weight: 600;
+  margin: 30px;
+  background-color: #fff;
+  box-shadow: 0 15px 15px #0003;
+  border-radius: 15px;
+}
+
+@media screen and (min-width: $screen-medium) {
+  .construct_img {
+    width: 300px;
+    height: 300px;
+  }
+}

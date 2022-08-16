@@ -1,0 +1,34 @@
+// @include '__varia'
+// @use "_variables";
+button {
+  border: none;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.button_solid {
+  background-color: $main;
+  color: #fff;
+}
+
+.button_solid_white {
+  background-color: #fff;
+  color: #000;
+}
+
+.button_outlined {
+  border: 2px solid $main;
+  background-color: #0000;
+}
+
+.button_outlined_white {
+  border: 2px solid #fff;
+  color: #fff;
+  background-color: #0000;
+}
+
+.button_medium {
+  height: 40px;
+  border-radius: 40px;
+  padding: 10px 20px;
+}

@@ -4,21 +4,34 @@ button {
   border: none;
   font-weight: 600;
   text-transform: uppercase;
+  cursor: pointer;
 }
 
 .button_solid {
   background-color: $main;
   color: #fff;
+
+  &:hover {
+    background-color: lighten($main, 15%);
+  }
 }
 
 .button_solid_white {
   background-color: #fff;
   color: #000;
+
+  &:hover {
+    background-color: #eee;
+  }
 }
 
 .button_outlined {
   border: 2px solid $main;
   background-color: #0000;
+
+  &:hover {
+    background-color: #8884;
+  }
 }
 
 .button_outlined_white {

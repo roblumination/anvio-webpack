@@ -8,6 +8,7 @@ module.exports = {
   overrides: [],
   parserOptions: {
     ecmaVersion: "latest",
+    sourceType: "module",
   },
   rules: {
     "max-len": [1, 70, 2, { ignoreComments: true }],

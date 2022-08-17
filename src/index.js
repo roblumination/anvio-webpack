@@ -1,16 +1,7 @@
 // import "./sass/index.scss";
-require("./sass/styles.scss");
+import "./sass/styles.scss";
 
-// const requiredPages = ["header", "footer"].map(
-//   (page) => require("./html/" + page + ".html").default
-// );
-
-// (function insertHTML() {
-//   const body = document.querySelector("body");
-
-//   requiredPages.forEach((page) => {
-//     body.innerHTML += page;
-//   });
-// })();
+// only for dev
+import "./scripts/injectHTML";
 
 console.log("--- hello from index.js! #4");

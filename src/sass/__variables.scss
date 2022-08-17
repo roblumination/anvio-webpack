@@ -35,6 +35,26 @@
   }
 }
 
+@mixin flexCol($gap: 0px) {
+  display: flex;
+  flex-direction: column;
+  gap: $gap;
+}
+
+@mixin flexCenter($gap: 0px) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $gap;
+}
+
+@mixin flexRowCenter($gap: 0px) {
+  display: flex;
+  // align-items: center;
+  justify-content: center;
+  gap: $gap;
+}
+
 $background: #eeeeee;
 $main: #ce2127;
 
@@ -58,3 +78,4 @@ $sans: "Euclid Circular A";
 $screen-small: 720px;
 $screen-medium: 1024px;
 $screen-big: 1280px;
+$screen-huge: 1800px;

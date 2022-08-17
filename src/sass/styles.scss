@@ -4,6 +4,7 @@
 @import "buttons";
 @import "header";
 @import "modal";
+@import "footer/footer";
 
 @import "01_intro";
 @import "02_plan";
@@ -15,11 +16,12 @@
   padding: 0px;
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
+  font-family: $sans;
 }
 
 body {
   background-color: $background;
-  font-family: $sans;
+  // font-family: $sans;
   min-height: 120vh;
   font-size: 14px;
 }
@@ -50,6 +52,30 @@ body {
   background-color: #fff;
   box-shadow: 0 15px 15px #0003;
   border-radius: 15px;
+}
+
+.dev-navigation {
+  position: absolute;
+  background-color: #3338;
+  bottom: calc(0px - 16px);
+  font-size: 16px;
+  backdrop-filter: blur(16px);
+
+  a {
+    color: #ff8;
+    text-decoration: none;
+    text-shadow: 0 1px 2px #ff0;
+
+    &:hover {
+      color: #fff;
+      text-shadow: 0 1px 2px #def;
+    }
+
+    &:active {
+      color: #fa8;
+      text-shadow: 0 1px 2px #f80;
+    }
+  }
 }
 
 @media screen and (min-width: $screen-medium) {

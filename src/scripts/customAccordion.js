@@ -14,6 +14,9 @@ const accordions = [
 ];
 
 accordions.forEach((acrd) => {
+  let test = "test text";
+  const test2 = "test tesdfsdfe";
+  console.log(test, test2);
   acrd.summary.addEventListener("click", () => {
     const state = acrd.isOpened;
     closeAll();

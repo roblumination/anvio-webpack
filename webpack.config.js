@@ -23,14 +23,12 @@ const loaders = [
       },
     ],
   },
-  // {
-  //   test: /\.html$/i,
-  //   loader: "raw-loader",
-  // },
-  // {
-  //   test: /\.html$/i,
-  //   loader: "html-loader",
-  // },
+
+  //comment below for prod
+  {
+    test: /\.html$/i,
+    loader: "html-loader",
+  },
 ];
 
 const plugins = [

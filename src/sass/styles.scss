@@ -1,15 +1,16 @@
 @import url(//db.onlinewebfonts.com/c/a575313c6dc4fd00c1a9506e1c3ea4fc?family=Euclid+Circular+A);
 
 @import "__variables";
-@import "buttons";
+@import "components/buttons";
 @import "header";
-@import "modal";
+@import "components/modal";
 @import "footer/footer";
 
 @import "01_intro";
 @import "02_plan";
 @import "03_info";
 @import "04_entertain";
+@import "11_news";
 
 * {
   margin: 0px;
@@ -35,12 +36,12 @@ body {
 }
 
 .construct_img {
-  width: 100px;
-  height: 100px;
+  width: 50px;
+  height: 50px;
 }
 
 .constr_block {
-  height: 600px;
+  height: 400px;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -48,10 +49,10 @@ body {
   align-items: center;
   font-size: 36px;
   font-weight: 600;
-  margin: 30px;
+  margin: 10px;
   background-color: #fff;
-  box-shadow: 0 15px 15px #0003;
-  border-radius: 15px;
+  box-shadow: 0 5px 8px #0003, 0 0px 4px #0004;
+  border-radius: 5px;
 }
 
 .dev-navigation {
@@ -80,7 +81,7 @@ body {
 
 @media screen and (min-width: $screen-medium) {
   .construct_img {
-    width: 300px;
-    height: 300px;
+    width: 100px;
+    height: 100px;
   }
 }

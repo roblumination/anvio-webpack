@@ -7,10 +7,10 @@ module.exports = {
   //   extends: "eslint:recommended",
   overrides: [],
   parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
+    ecmaVersion: 'latest',
+    sourceType: 'module',
   },
   rules: {
-    "max-len": [1, 70, 2, { ignoreComments: true }],
+    'max-len': [1, 120, 2, { ignoreComments: true }],
   },
-};
+}

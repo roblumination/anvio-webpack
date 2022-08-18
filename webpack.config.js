@@ -45,6 +45,7 @@ module.exports = {
   entry: {
     app: "./src/index.js",
     slider: "./src/scripts/singleSlider.js",
+    sliders: "./src/scripts/slidersInit.js",
   },
   output: {
     path: path.resolve(__dirname, "./dist"),

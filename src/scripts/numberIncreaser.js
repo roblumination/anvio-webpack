@@ -1,14 +1,18 @@
-const infoNum1 = document.getElementById("info-number-1");
-const infoNum2 = document.getElementById("info-number-2");
+const infoNum1 = document.getElementById('info-number-1');
+const infoNum2 = document.getElementById('info-number-2');
 const infoScrollPos = infoNum1.offsetTop;
 let isInfoCountStarted = false;
 
-window.addEventListener("scroll", (e) => {
-  if (!isInfoCountStarted && this.scrollY > infoScrollPos - 600) {
+window.addEventListener('scroll', (e) => {
+  // console.log(window.scrollY, infoScrollPos);
+  if (!isInfoCountStarted && window.scrollY > infoScrollPos - 600) {
+    // console.log('should increase here');
     isInfoCountStarted = true;
     startInfoCount();
   }
 });
+
+console.log('loaded!');
 
 async function startInfoCount() {
   const num1Max = 12;

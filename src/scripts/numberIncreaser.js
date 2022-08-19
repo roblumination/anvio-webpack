@@ -1,34 +1,45 @@
-const infoNum1 = document.getElementById('info-number-1');
-const infoNum2 = document.getElementById('info-number-2');
-const infoScrollPos = infoNum1.offsetTop;
-let isInfoCountStarted = false;
+import { delay } from './utils';
 
-window.addEventListener('scroll', (e) => {
-  // console.log(window.scrollY, infoScrollPos);
-  if (!isInfoCountStarted && window.scrollY > infoScrollPos - 600) {
-    // console.log('should increase here');
-    isInfoCountStarted = true;
-    startInfoCount();
+class NumberIncreaser {
+  constructor(elementClass, endValue) {
+    this.element;
+    this.isCountStarted = false;
+    this.endValue = endValue;
+    this.initElement(elementClass);
+    this.initListener();
   }
-});
 
-console.log('loaded!');
+  initElement(elementClass) {
+    try {
+      this.element = document.querySelector(elementClass);
+      if (!this.element)
+        throw new Error(`Number Increaser: ${elementClass} not found`);
+    } catch (e) {
+      console.error(e);
+    }
+  }
 
-async function startInfoCount() {
-  const num1Max = 12;
-  const num2Max = 26;
+  initListener() {
+    const elementTopOffset = this.element.offsetTop;
 
-  for (let i = 0; i < num2Max; i++) {
-    if (i <= num1Max) infoNum1.innerText = i;
-    if (i <= num2Max) infoNum2.innerText = i;
-    await delay(40);
+    window.addEventListener('scroll', () => {
+      const isNecessaryOffsetReached = window.scrollY > elementTopOffset - 600;
+
+      if (!this.isCountStarted && isNecessaryOffsetReached) {
+        this.isCountStarted = true;
+        this.startInfoCount();
+      }
+    });
+  }
+
+  async startInfoCount() {
+    for (let i = 0; i <= this.endValue; i++) {
+      // if (i <= num1Max) infoNum1.innerText = i;
+      await delay(40);
+      this.element.innerText = i;
+    }
   }
 }
 
-function delay(delayInms) {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(2);
-    }, delayInms);
-  });
-}
+new NumberIncreaser('#info-number-1', 12);
+new NumberIncreaser('#info-number-2', 26);

@@ -86,7 +86,7 @@ export default class AnvioSlider {
     // START
     //
     this.sliderWrapper.addEventListener("touchstart", (e) => {
-      this.sliderWrapper.style.transition = "all 0.1s";
+      this.sliderWrapper.style.transition = "all 0.0s";
       touchStartX = e.changedTouches[0].clientX;
     });
 

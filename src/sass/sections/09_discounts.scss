@@ -1,6 +1,5 @@
-.news {
+.discounts {
   padding-top: 89px;
-  border: 1px solid #ff0;
 
   &__header {
     &__text {
@@ -20,34 +19,40 @@
     height: 619px;
     &__wrapper {
       gap: 10px;
-      transform: translateX(20px);
+      transform: translateX(30px);
     }
     &__slide {
       min-width: 250px;
       width: 250px;
-      height: 619px;
+      height: 322px;
       border-radius: 20px;
       padding: 20px;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       justify-content: space-between;
+      background-color: $main;
+      color: #fff;
 
       &__content {
         @include flexCol(10px);
-        time {
-          color: #0008;
-        }
-        img {
-          display: block;
-          height: 200px;
-          width: 210px;
-          border-radius: 10px;
-          object-fit: cover;
-        }
+        // time {
+        //   color: #fff8;
+        // }
+        // img {
+        //   display: none;
+        //   height: 200px;
+        //   width: 210px;
+        //   border-radius: 10px;
+        //   object-fit: cover;
+        // }
         h3 {
           font-size: 24px;
           margin-bottom: 10px;
+        }
+
+        header {
+          display: flex;
         }
         p {
           line-height: 1.5em;
@@ -55,10 +60,24 @@
       }
       button {
       }
+
+      &__poster {
+        display: none;
+        height: 200px;
+        width: 300px;
+        border-radius: 10px;
+        object-fit: cover;
+      }
+
+      &__disc-img {
+        width: 60px;
+        height: 60px;
+      }
     }
     .slider-button-L,
     .slider-button-R {
-      top: 283px;
+      top: 131px;
+      // background-color: #ff0;
     }
 
     .slider-button-L {
@@ -81,9 +100,8 @@
 }
 
 @media screen and (min-width: $screen-medium) {
-  .news {
+  .discounts {
     padding-top: 67px;
-    // border: 1px solid #ff0;
 
     &__header {
       display: flex;
@@ -107,7 +125,7 @@
       }
       &__slide {
         min-width: 400px;
-        height: 700px;
+        height: 580px;
         border-radius: 30px;
         padding: 50px;
 
@@ -117,29 +135,24 @@
             // color: #0008;
             font-size: 16px;
           }
-          img {
-            display: block;
-            height: 200px;
-            width: 300px;
-            border-radius: 10px;
-            object-fit: cover;
-          }
           h3 {
             font-size: 32px;
             margin-bottom: 15px;
           }
           p {
-            // line-height: 1.5em;
             font-size: 16px;
-            // letter-spacing: 0.05em;
           }
         }
         button {
         }
+
+        &__poster {
+          display: block;
+        }
       }
       .slider-button-L,
       .slider-button-R {
-        top: 283px;
+        top: 263px;
       }
 
       .slider-button-L {
@@ -162,40 +175,3 @@
     }
   }
 }
-
-// .news {
-//   padding-top: 89px;
-//   border: 1px solid #ff0;
-
-//   &__header {
-//     &__text {
-//       text-align: center;
-//       font-size: 32px;
-//     }
-
-//     &__button {
-//       display: none;
-//     }
-//   }
-
-//   &-slider {
-//     &__wrapper {
-//     }
-//     &__slide {
-//     }
-//     .slider-button-L,
-//     .slider-button-R {
-//       top: 283px;
-//     }
-//   }
-
-//   &__footer {
-//     padding-top: 40px;
-//     @include flexCenter();
-//     &__button {
-//     }
-//     &__ico {
-//       display: none;
-//     }
-//   }
-// }

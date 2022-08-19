@@ -4,14 +4,16 @@
 @import "components/buttons";
 @import "components/modal";
 @import "components/AnvioSlider";
-@import "header";
-@import "footer/footer";
 
-@import "01_intro";
-@import "02_plan";
-@import "03_info";
-@import "04_entertain";
-@import "11_news";
+@import "sections/header";
+@import "sections/footer/footer";
+@import "sections/01_intro";
+@import "sections/02_plan";
+@import "sections/03_info";
+@import "sections/04_entertain";
+@import "sections/09_discounts";
+@import "sections/11_news";
+@import "sections/12_fin-slider";
 
 * {
   margin: 0px;

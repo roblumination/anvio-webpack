@@ -65,8 +65,16 @@ export default class AnvioSlider {
   }
 
   initListeners() {
-    this.buttons.left.addEventListener("click", () => this.prevSlide());
-    this.buttons.right.addEventListener("click", () => this.nextSlide());
+    const vibrate = () => navigator.vibrate(10);
+
+    this.buttons.left.addEventListener("click", () => {
+      vibrate();
+      this.prevSlide();
+    });
+    this.buttons.right.addEventListener("click", () => {
+      vibrate();
+      this.nextSlide();
+    });
     this.initTouchListeners();
   }
 

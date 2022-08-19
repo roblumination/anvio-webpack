@@ -1,21 +1,40 @@
 <div class="fin-slider" id="fin-slider">
-  <div class="f-slider">
-    <!-- Additional required wrapper -->
-    <div class="f-slider__wrapper">
-      <!-- Slides -->
-      <div class="f-slider__slide">Slide 1</div>
-      <div class="f-slider__slide">Slide 2</div>
-      <div class="f-slider__slide">Slide 2</div>
-      ...
+  <div class="f-slider swiper">
+    <div class="f-slider__wrapper swiper-wrapper">
+      <div class="f-slider__slide swiper-slide">
+        <div class="f-slider__slide__text">
+          <h3>скидка 50%</h3>
+          <p>на второй сеанс</p>
+        </div>
+        <button class="button_medium button_outlined_white">
+          Получить скидку
+        </button>
+      </div>
+
+      <div class="f-slider__slide swiper-slide">
+        <div class="f-slider__slide__text">
+          <p>День рождения</p>
+          <h3>от 1490 ₴</h3>
+        </div>
+        <button class="button_medium button_outlined_white">
+          рассчитать стоимость
+        </button>
+      </div>
+
+      <div class="f-slider__slide swiper-slide">
+        <div class="f-slider__slide__text">
+          <p>Командный бонус</p>
+          <h3>1000 ₴</h3>
+        </div>
+        <button class="button_medium button_outlined_white">
+          Забрать бонус
+        </button>
+      </div>
     </div>
-    <!-- If we need pagination -->
-    <div class="f-slider__pagination"></div>
-
-    <!-- If we need navigation buttons -->
-    <div class="f-slider__button-prev"></div>
-    <div class="f-slider__button-next"></div>
-
-    <!-- If we need scrollbar -->
-    <!-- <div class="swiper-scrollbar"></div> -->
   </div>
+
+  <div class="f-slider__pagination swiper-pagination"></div>
+
+  <div class="f-slider__button-prev"></div>
+  <div class="f-slider__button-next"></div>
 </div>

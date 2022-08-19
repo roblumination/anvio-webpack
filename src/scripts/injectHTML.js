@@ -13,6 +13,7 @@ const requiredPages = [
   "11_news",
   "12_fin-slider",
   "footer",
+  "modal",
 ].map((page) => require("../html/" + page + ".html").default);
 
 (function insertHTML() {

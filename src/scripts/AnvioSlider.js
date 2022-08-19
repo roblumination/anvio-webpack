@@ -1,4 +1,4 @@
-import { clamp } from './utils';
+import { clamp } from "./utils";
 
 export default class AnvioSlider {
   constructor(config) {
@@ -60,13 +60,13 @@ export default class AnvioSlider {
       throw new Error(errorMsgBase + "doesn't have slides");
     }
     if (!this.buttons.left || !this.buttons.right) {
-      throw new Error(errorMsgBase + 'invalid button classnames');
+      throw new Error(errorMsgBase + "invalid button classnames");
     }
   }
 
   initListeners() {
-    this.buttons.left.addEventListener('click', () => this.prevSlide());
-    this.buttons.right.addEventListener('click', () => this.nextSlide());
+    this.buttons.left.addEventListener("click", () => this.prevSlide());
+    this.buttons.right.addEventListener("click", () => this.nextSlide());
     this.initTouchListeners();
   }
 
@@ -77,26 +77,26 @@ export default class AnvioSlider {
     //
     // START
     //
-    this.sliderWrapper.addEventListener('touchstart', (e) => {
-      this.sliderWrapper.style.transition = 'all 0.1s';
+    this.sliderWrapper.addEventListener("touchstart", (e) => {
+      this.sliderWrapper.style.transition = "all 0.1s";
       touchStartX = e.changedTouches[0].clientX;
     });
 
     //
     // END
     //
-    this.sliderWrapper.addEventListener('touchend', (e) => {
+    this.sliderWrapper.addEventListener("touchend", (e) => {
       touchEndX = e.changedTouches[0].clientX;
       this.setWrapperOffset(this.wrapperOffset + (touchStartX - touchEndX));
-      this.sliderWrapper.style.transition = 'all 0.5s';
+      this.sliderWrapper.style.transition = "all 0.5s";
       this.getCurrentSlideNumber();
-      this.adjustSliderOffset();
+      // this.adjustSliderOffset();
     });
 
     //
     // MOVE
     //
-    this.sliderWrapper.addEventListener('touchmove', (e) => {
+    this.sliderWrapper.addEventListener("touchmove", (e) => {
       const touchOffsetX = e.changedTouches[0].clientX;
       this.addWrapperOffset(touchStartX - touchOffsetX);
     });

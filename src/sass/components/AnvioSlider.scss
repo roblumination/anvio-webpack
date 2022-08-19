@@ -1,0 +1,66 @@
+.anvio-slider {
+  position: relative;
+  height: 400px;
+  overflow: hidden;
+
+  &__wrapper {
+    display: flex;
+    transition: all 0.5s;
+    // padding: 15px;
+    gap: 30px;
+
+    -ms-touch-action: pan-y;
+    touch-action: pan-y;
+  }
+
+  &__slide {
+    background-color: #fff;
+    min-width: 200px;
+    height: 400px;
+    // border-radius: 30px;
+    // padding: 50px;
+    // font-size: 16px;
+    // @include flexCenter();
+  }
+
+  &__button {
+    &-prev,
+    &-next {
+      position: absolute;
+      top: 323px;
+    }
+
+    &-prev {
+      left: 10px;
+    }
+
+    &-next {
+      right: 10px;
+    }
+  }
+}
+
+.slider-button-R,
+.slider-button-L {
+  box-shadow: $modal-shadow;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #fff;
+  cursor: pointer;
+  user-select: none;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: all 0.05s;
+
+  &:active {
+    transform: translateY(3px) scale(0.95);
+  }
+}
+
+.slider-button-L {
+  background-image: url("/src/assets/arrow_left.svg");
+}
+.slider-button-R {
+  background-image: url("/src/assets/arrow_right.svg");
+}

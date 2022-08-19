@@ -44,10 +44,12 @@ module.exports = {
   // --- I/O ---
   entry: {
     app: "./src/index.js",
-    slider: "./src/scripts/singleSlider.js",
-    sliders: "./src/scripts/slidersInit.js",
-    increaser: "./src/scripts/numberIncreaser.js",
-    modalControll: "./src/scripts/modalControl.js",
+    // slider: "./src/scripts/singleSlider.js",
+    // sliders: "./src/scripts/slidersInit.js",
+    // increaser: "./src/scripts/numberIncreaser.js",
+    modalControll: "./src/scripts/other/modalControl.js",
+    customAccord: "./src/scripts/other/customAccordion.js",
+    simpleSlider: "./src/scripts/other/singleSlider.js",
   },
   output: {
     path: path.resolve(__dirname, "./dist"),

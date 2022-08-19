@@ -1,6 +1,6 @@
-import { delay } from './utils';
+import { delay } from "../utils";
 
-class NumberIncreaser {
+export default class NumberIncreaser {
   constructor(elementClass, endValue) {
     this.element;
     this.isCountStarted = false;
@@ -22,7 +22,7 @@ class NumberIncreaser {
   initListener() {
     const elementTopOffset = this.element.offsetTop;
 
-    window.addEventListener('scroll', () => {
+    window.addEventListener("scroll", () => {
       const isNecessaryOffsetReached = window.scrollY > elementTopOffset - 600;
 
       if (!this.isCountStarted && isNecessaryOffsetReached) {
@@ -40,6 +40,3 @@ class NumberIncreaser {
     }
   }
 }
-
-new NumberIncreaser('#info-number-1', 12);
-new NumberIncreaser('#info-number-2', 26);

@@ -5,6 +5,7 @@ button {
   font-weight: 600;
   text-transform: uppercase;
   cursor: pointer;
+  user-select: none;
 }
 
 .button_solid {
@@ -44,4 +45,11 @@ button {
   height: 40px;
   border-radius: 40px;
   padding: 10px 20px;
+}
+
+.button_big {
+  height: 60px;
+  border-radius: 40px;
+  padding: 20px 40px;
+  font-size: 16px;
 }

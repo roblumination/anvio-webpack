@@ -21,8 +21,6 @@ const modals = {
   price: document.getElementById("modal-price"),
 };
 
-console.log(modals);
-
 const menuIco = {
   closed: document.getElementById("menu-ico_closed"),
   opened: document.getElementById("menu-ico_opened"),

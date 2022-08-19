@@ -1,4 +1,4 @@
-import { clamp } from "./utils";
+import { clamp } from "../utils";
 
 export default class AnvioSlider {
   constructor(config) {

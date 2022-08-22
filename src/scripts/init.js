@@ -21,6 +21,7 @@ import "swiper/css/pagination";
     sliderClassName: ".discounts-slider",
     nextButtonClassName: "#discounts-slider__button-next",
     prevButtonClassName: "#discounts-slider__button-prev",
+    initSlideNumber: 3,
   });
 
   new Swiper(".f-slider", {

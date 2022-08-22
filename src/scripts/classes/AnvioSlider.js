@@ -1,18 +1,36 @@
 import { clamp } from "../utils";
 
 export default class AnvioSlider {
-  constructor(config) {
-    this.currentSlideNumber = 0;
+  constructor({
+    sliderClassName,
+    nextButtonClassName,
+    prevButtonClassName,
+
+    sideOffset = {
+      0: 22,
+      768: 29,
+    },
+    initSlideNumber = 0,
+  }) {
+    this.currentSlideNumber = initSlideNumber;
     this.wrapperOffset = 0;
-    this.sideOffset = 30;
+    this.touchStartX = 0;
+    this.touchEndX = 0;
+    // this.sideOffset = 30;
 
     try {
-      this.initElements(config);
-      this.checkElements(config.sliderClassName);
+      this.initElements({
+        sliderClassName,
+        nextButtonClassName,
+        prevButtonClassName,
+      });
+      this.checkElements(sliderClassName);
       this.initListeners();
+      this.initAdaptiveSideOffset(sideOffset);
     } catch (e) {
       console.error(e);
     }
+    this.adjustSliderOffset();
   }
 
   get lastSlide() {
@@ -23,7 +41,27 @@ export default class AnvioSlider {
     return this.lastSlide.offsetWidth + this.lastSlide.offsetLeft;
   }
 
-  setWrapperOffset(offset) {
+  initAdaptiveSideOffset(sideOffset) {
+    const offset = sideOffset;
+    const funcIfObject = () => {
+      let result = "empty result";
+
+      for (let size in offset) {
+        if (document.querySelector("body").offsetWidth > size)
+          result = offset[size];
+      }
+
+      return result;
+    };
+
+    Object.defineProperties(this, {
+      sideOffset: {
+        get: typeof sideOffset !== "object" ? () => offset : funcIfObject,
+      },
+    });
+  }
+
+  setAbsoluteWrapperOffset(offset) {
     const final = clamp(
       0 - this.sideOffset,
       offset - this.sideOffset,
@@ -33,7 +71,7 @@ export default class AnvioSlider {
     this.sliderWrapper.style.transform = `translateX(${-final}px)`;
   }
 
-  addWrapperOffset(offset) {
+  setRelativeOffset(offset) {
     const final = this.wrapperOffset + offset;
     this.sliderWrapper.style.transform = `translateX(${-final}px)`;
   }
@@ -75,39 +113,37 @@ export default class AnvioSlider {
       vibrate();
       this.nextSlide();
     });
-    this.initTouchListeners();
+
+    this.sliderWrapper.addEventListener("touchstart", (e) =>
+      this.handleTouchStart(e)
+    );
+    this.sliderWrapper.addEventListener("touchmove", (e) => {
+      this.handleTouchMove(e);
+    });
+    this.sliderWrapper.addEventListener("touchend", (e) => {
+      this.handleTouchEnd(e);
+    });
+    // this.initTouchListeners();
   }
 
-  initTouchListeners() {
-    let touchStartX = 0;
-    let touchEndX = 0;
+  handleTouchStart(e) {
+    // this.sliderWrapper.style.transition = "all 0.0s";
+    this.disableTransitions();
+    this.touchStartX = e.changedTouches[0].clientX;
+  }
 
-    //
-    // START
-    //
-    this.sliderWrapper.addEventListener("touchstart", (e) => {
-      this.sliderWrapper.style.transition = "all 0.0s";
-      touchStartX = e.changedTouches[0].clientX;
-    });
+  handleTouchMove(e) {
+    const touchOffsetX = e.changedTouches[0].clientX;
+    this.setRelativeOffset(this.touchStartX - touchOffsetX);
+  }
 
-    //
-    // END
-    //
-    this.sliderWrapper.addEventListener("touchend", (e) => {
-      touchEndX = e.changedTouches[0].clientX;
-      this.setWrapperOffset(this.wrapperOffset + (touchStartX - touchEndX));
-      this.sliderWrapper.style.transition = "all 0.5s";
-      this.getCurrentSlideNumber();
-      // this.adjustSliderOffset();
-    });
-
-    //
-    // MOVE
-    //
-    this.sliderWrapper.addEventListener("touchmove", (e) => {
-      const touchOffsetX = e.changedTouches[0].clientX;
-      this.addWrapperOffset(touchStartX - touchOffsetX);
-    });
+  handleTouchEnd(e) {
+    this.touchEndX = e.changedTouches[0].clientX;
+    this.setAbsoluteWrapperOffset(
+      this.wrapperOffset + (this.touchStartX - this.touchEndX)
+    );
+    this.enableTransitions();
+    this.updpateCurrentSlideNumber();
   }
 
   nextSlide() {
@@ -133,13 +169,11 @@ export default class AnvioSlider {
       this.slidesList[this.currentSlideNumber].offsetLeft;
     const lastSlideOffsetFull =
       this.lastSlide.offsetLeft + this.lastSlide.offsetWidth;
-    let finalOffset;
-
     const isLastSlideVisible =
       lastSlideOffsetFull - offsetCurrentSlide < this.sliderEl.offsetWidth;
-
     const isCurrentSlideIsLast =
       this.currentSlideNumber == this.slidesList.length - 1;
+    let finalOffset;
 
     if (!isLastSlideVisible) {
       finalOffset = offsetCurrentSlide;
@@ -156,10 +190,18 @@ export default class AnvioSlider {
       this.currentSlideNumber = this.slidesList.length - 1;
     }
 
-    this.setWrapperOffset(finalOffset);
+    this.setAbsoluteWrapperOffset(finalOffset);
   }
 
-  getCurrentSlideNumber() {
+  enableTransitions() {
+    this.sliderWrapper.style.transition = "all 0.5s";
+  }
+
+  disableTransitions() {
+    this.sliderWrapper.style.transition = "all 0s";
+  }
+
+  updpateCurrentSlideNumber() {
     this.currentSlideNumber = ~~(
       this.wrapperOffset / this.slidesList[0].offsetWidth
     );

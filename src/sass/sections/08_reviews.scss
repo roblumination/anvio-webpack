@@ -1,0 +1,149 @@
+.reviews {
+  // padding-top: 89px;
+
+  &__header {
+    &__text {
+      text-align: center;
+      font-size: 32px;
+      margin-bottom: 25px;
+    }
+
+    &__button {
+      display: none;
+      letter-spacing: 0.05em;
+    }
+  }
+
+  &-slider {
+    // border: 2px solid #0a0;
+    height: 322px;
+    &__wrapper {
+      gap: 10px;
+      transform: translateX(30px);
+    }
+    &__slide {
+      min-width: 260px;
+      width: 260px;
+      height: 300px;
+      border-radius: 20px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: space-between;
+      background-color: #fff;
+      // color: #fff;
+    }
+    .slide {
+      &__header {
+        display: flex;
+        &__img {
+          display: block;
+          width: 50px;
+          height: 50px;
+          object-fit: contain;
+          border-radius: 50%;
+        }
+      }
+      &__text {
+      }
+    }
+    .slider-button-L,
+    .slider-button-R {
+      top: 131px;
+      // background-color: #ff0;
+    }
+
+    .slider-button-L {
+      left: -10px;
+    }
+    .slider-button-R {
+      right: -10px;
+    }
+  }
+
+  &__footer {
+    padding-top: 40px;
+    @include flexCenter();
+    // &__ico {
+    //   display: block;
+    // }
+  }
+}
+
+// @media screen and (min-width: $screen-medium) {
+//   .discounts {
+//     padding-top: 67px;
+
+//     &__header {
+//       display: flex;
+//       justify-content: space-between;
+//       padding: 0 30px;
+//       &__text {
+//         text-align: left;
+//         font-size: 64px;
+//       }
+
+//       &__button {
+//         display: block;
+//       }
+//     }
+
+//     &-slider {
+//       height: 700px;
+
+//       &__wrapper {
+//         gap: 30px;
+//       }
+//       &__slide {
+//         min-width: 400px;
+//         height: 580px;
+//         border-radius: 30px;
+//         padding: 50px;
+
+//         &__content {
+//           @include flexCol(10px);
+//           time {
+//             // color: #0008;
+//             font-size: 16px;
+//           }
+//           h3 {
+//             font-size: 32px;
+//             margin-bottom: 15px;
+//           }
+//           p {
+//             font-size: 16px;
+//           }
+//         }
+//         button {
+//         }
+
+//         &__poster {
+//           display: block;
+//         }
+//       }
+//       .slider-button-L,
+//       .slider-button-R {
+//         top: 263px;
+//       }
+
+//       .slider-button-L {
+//         left: 10px;
+//       }
+//       .slider-button-R {
+//         right: 10px;
+//       }
+//     }
+
+//     &__footer {
+//       padding-top: 40px;
+//       @include flexCenter();
+//       &__button {
+//         display: none;
+//       }
+//       &__ico {
+//         display: block;
+//       }
+//     }
+//   }
+// }

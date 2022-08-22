@@ -10,10 +10,11 @@
 
 .fin-slider {
   padding: 30px 20px;
-  background-color: rgba($main, 0.9);
+  background-color: rgba($main, 1);
   position: relative;
   overflow: hidden;
   margin-top: 104px;
+  transition: all 0.3s;
   .f-slider {
     position: relative;
     &__wrapper {
@@ -92,6 +93,7 @@
 
 @media screen and (min-width: $screen-medium) {
   .fin-slider {
+    background-color: rgba($main, 0.9);
     padding: 30px 30px;
     .f-slider {
       &__slide {

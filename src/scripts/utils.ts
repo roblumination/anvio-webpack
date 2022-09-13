@@ -15,9 +15,15 @@ export function adjustSmoothScrollForAnchors() {
     anchor.addEventListener("click", function (e) {
       e.preventDefault();
 
-      document.querySelector(this.getAttribute("href")).scrollIntoView({
-        behavior: "smooth",
-      });
+      const attribute = anchor.getAttribute("href");
+      if (attribute) {
+        const elementScrollTo = document.querySelector<HTMLElement>(attribute);
+        if (elementScrollTo) {
+          elementScrollTo.scrollIntoView({
+            behavior: "smooth",
+          });
+        }
+      }
     });
   });
 }

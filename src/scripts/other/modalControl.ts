@@ -11,11 +11,11 @@ const buttons = {
   phone: document.getElementById("header-btn-phone"),
   menu: document.getElementById("header-btn-menu"),
   price: document.getElementById("btn-price"),
-  priceClose: "-m+",
+  // priceClose: "-m+",
 };
 
 const modals = {
-  background: document.querySelector(".modal__background"),
+  background: document.querySelector<HTMLElement>(".modal__background"),
   menu: document.getElementById("modal-menu"),
   location: document.getElementById("modal-location"),
   price: document.getElementById("modal-price"),
@@ -26,89 +26,104 @@ const menuIco = {
   opened: document.getElementById("menu-ico_opened"),
 };
 
-buttons.location.addEventListener("click", () => {
-  state.modalSmallLocationIsActive = !state.modalSmallLocationIsActive;
-  state.modalSmallMenuIsActive = false;
-  state.modalIsActive = state.modalSmallLocationIsActive ? true : false;
-  state.modalNormalIsActive = false;
+if (buttons.location && buttons.menu && buttons.price) {
+  buttons.location.addEventListener("click", () => {
+    state.modalSmallLocationIsActive = !state.modalSmallLocationIsActive;
+    state.modalSmallMenuIsActive = false;
+    state.modalIsActive = state.modalSmallLocationIsActive ? true : false;
+    state.modalNormalIsActive = false;
 
-  render();
-});
+    render();
+  });
 
-buttons.menu.addEventListener("click", () => {
-  state.modalSmallMenuIsActive = !state.modalSmallMenuIsActive;
-  state.modalIsActive = state.modalSmallMenuIsActive ? true : false;
-  state.modalSmallLocationIsActive = false;
-  state.modalNormalIsActive = false;
+  buttons.menu.addEventListener("click", () => {
+    state.modalSmallMenuIsActive = !state.modalSmallMenuIsActive;
+    state.modalIsActive = state.modalSmallMenuIsActive ? true : false;
+    state.modalSmallLocationIsActive = false;
+    state.modalNormalIsActive = false;
 
-  render();
-});
+    render();
+  });
 
-buttons.price.addEventListener("click", () => {
-  console.log("price!");
-  state.modalSmallMenuIsActive = false;
-  state.modalIsActive = true;
-  state.modalSmallLocationIsActive = false;
-  state.modalNormalIsActive = true;
+  buttons.price.addEventListener("click", () => {
+    console.log("price!");
+    state.modalSmallMenuIsActive = false;
+    state.modalIsActive = true;
+    state.modalSmallLocationIsActive = false;
+    state.modalNormalIsActive = true;
 
-  render();
-});
+    render();
+  });
+}
 
-modals.background.addEventListener("click", (e) => {
-  if (e.target != modals.background) return;
-  state.modalIsActive = false;
-  state.modalSmallLocationIsActive = false;
-  state.modalSmallMenuIsActive = false;
-  // state.moda;
-  state.modalNormalIsActive = false;
+if (modals.background) {
+  modals.background.addEventListener("click", (e) => {
+    if (e.target != modals.background) return;
+    state.modalIsActive = false;
+    state.modalSmallLocationIsActive = false;
+    state.modalSmallMenuIsActive = false;
+    // state.moda;
+    state.modalNormalIsActive = false;
 
-  render();
-});
+    render();
+  });
+}
 
 function render() {
   // apply styles according to state{}
 
   //background
-  modals.background.style.opacity = state.modalIsActive ? "1" : "0.0";
-  modals.background.style.pointerEvents = state.modalIsActive ? "all" : "none";
+  if (modals.background && modals.menu) {
+    modals.background.style.opacity = state.modalIsActive ? "1" : "0.0";
+    modals.background.style.pointerEvents = state.modalIsActive
+      ? "all"
+      : "none";
 
-  //menu
-  modals.menu.style.transform = state.modalSmallMenuIsActive
-    ? "translateX(0px)"
-    : "translateX(300px)";
-  modals.menu.style.opacity = state.modalSmallMenuIsActive ? "1" : "0.0";
-  modals.menu.style.pointerEvents = state.modalSmallMenuIsActive
-    ? "all"
-    : "none";
-  buttons.menu.style.backgroundColor = state.modalSmallMenuIsActive
-    ? "#fff"
-    : "#fff0";
-  menuIco.closed.style.display = state.modalSmallMenuIsActive
-    ? "none"
-    : "block";
-  menuIco.opened.style.display = !state.modalSmallMenuIsActive
-    ? "none"
-    : "block";
+    //menu
+    modals.menu.style.transform = state.modalSmallMenuIsActive
+      ? "translateX(0px)"
+      : "translateX(300px)";
+    modals.menu.style.opacity = state.modalSmallMenuIsActive ? "1" : "0.0";
+    modals.menu.style.pointerEvents = state.modalSmallMenuIsActive
+      ? "all"
+      : "none";
+  }
 
-  //location
-  modals.location.style.transform = state.modalSmallLocationIsActive
-    ? "translateX(0px)"
-    : "translateX(300px)";
-  modals.location.style.opacity = state.modalSmallLocationIsActive
-    ? "1"
-    : "0.0";
-  modals.location.style.pointerEvents = state.modalSmallLocationIsActive
-    ? "all"
-    : "none";
-  buttons.location.style.backgroundColor = state.modalSmallLocationIsActive
-    ? "#fff"
-    : "#fff0";
+  if (buttons.menu && menuIco.closed && menuIco.opened) {
+    buttons.menu.style.backgroundColor = state.modalSmallMenuIsActive
+      ? "#fff"
+      : "#fff0";
+    menuIco.closed.style.display = state.modalSmallMenuIsActive
+      ? "none"
+      : "block";
+    menuIco.opened.style.display = !state.modalSmallMenuIsActive
+      ? "none"
+      : "block";
+  }
 
-  modals.price.style.transform = state.modalNormalIsActive
-    ? "translateX(0px)"
-    : "translateX(300px)";
-  modals.price.style.opacity = state.modalNormalIsActive ? "1" : "0.0";
-  modals.price.style.pointerEvents = state.modalNormalIsActive ? "all" : "none";
+  if (modals.location && buttons.location && modals.price) {
+    //location
+    modals.location.style.transform = state.modalSmallLocationIsActive
+      ? "translateX(0px)"
+      : "translateX(300px)";
+    modals.location.style.opacity = state.modalSmallLocationIsActive
+      ? "1"
+      : "0.0";
+    modals.location.style.pointerEvents = state.modalSmallLocationIsActive
+      ? "all"
+      : "none";
+    buttons.location.style.backgroundColor = state.modalSmallLocationIsActive
+      ? "#fff"
+      : "#fff0";
+
+    modals.price.style.transform = state.modalNormalIsActive
+      ? "translateX(0px)"
+      : "translateX(300px)";
+    modals.price.style.opacity = state.modalNormalIsActive ? "1" : "0.0";
+    modals.price.style.pointerEvents = state.modalNormalIsActive
+      ? "all"
+      : "none";
+  }
 }
 
 // setTimeout(() => render(), 1000);

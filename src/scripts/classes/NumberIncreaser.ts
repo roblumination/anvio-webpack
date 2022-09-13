@@ -1,22 +1,20 @@
 import { delay } from "../utils";
 
 export default class NumberIncreaser {
-  constructor(elementClass, endValue) {
-    this.element;
+  element: HTMLElement;
+  isCountStarted: boolean;
+  endValue: number;
+
+  constructor(elementClassName: string, endValue: number) {
+    const element = document.querySelector<HTMLElement>(elementClassName);
+    if (element) {
+      this.element = element;
+    } else {
+      throw new Error("Error with init element");
+    }
     this.isCountStarted = false;
     this.endValue = endValue;
-    this.initElement(elementClass);
     this.initListener();
-  }
-
-  initElement(elementClass) {
-    try {
-      this.element = document.querySelector(elementClass);
-      if (!this.element)
-        throw new Error(`Number Increaser: ${elementClass} not found`);
-    } catch (e) {
-      console.error(e);
-    }
   }
 
   initListener() {
@@ -36,7 +34,7 @@ export default class NumberIncreaser {
     for (let i = 0; i <= this.endValue; i++) {
       // if (i <= num1Max) infoNum1.innerText = i;
       await delay(40);
-      this.element.innerText = i;
+      this.element.innerText = i.toString();
     }
   }
 }

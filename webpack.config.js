@@ -51,10 +51,10 @@ const plugins = [
 module.exports = {
   // --- I/O ---
   entry: {
-    app: "./src/index.js",
-    modalControll: "./src/scripts/other/modalControl.js",
-    customAccord: "./src/scripts/other/customAccordion.js",
-    simpleSlider: "./src/scripts/other/singleSlider.js",
+    app: "./src/index.ts",
+    modalControll: "./src/scripts/other/modalControl.ts",
+    customAccord: "./src/scripts/other/customAccordion.ts",
+    simpleSlider: "./src/scripts/other/singleSlider.ts",
   },
   output: {
     path: path.resolve(__dirname, "./dist"),

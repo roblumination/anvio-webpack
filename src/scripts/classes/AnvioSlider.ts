@@ -1,6 +1,35 @@
 import { clamp } from "../utils";
 
+interface AnvioSliderConfiguration {
+  sliderClassName: string;
+  nextButtonClassName: string;
+  prevButtonClassName: string;
+
+  sideOffset?: Object;
+  initSlideNumber?: number;
+}
+
+interface AnvioElementsBundle {
+  sliderEl: HTMLElement;
+  sliderWrapper: Element | HTMLCollection;
+  slidesList: Element | HTMLCollection;
+  buttons: {
+    left: HTMLElement;
+    right: HTMLElement;
+  };
+}
+
 export default class AnvioSlider {
+  currentSlideNumber: number;
+  wrapperOffset: number;
+  touchStartX: number;
+  touchEndX: number;
+  sideOffset: object;
+  slidesList: HTMLCollection;
+  sliderEl: HTMLElement;
+  sliderWrapper: HTMLElement | Element | HTMLCollection;
+  buttons: { left: HTMLElement; right: HTMLElement };
+
   constructor({
     sliderClassName,
     nextButtonClassName,
@@ -11,24 +40,29 @@ export default class AnvioSlider {
       768: 29,
     },
     initSlideNumber = 0,
-  }) {
+  }: AnvioSliderConfiguration) {
     this.currentSlideNumber = initSlideNumber;
     this.wrapperOffset = 0;
     this.touchStartX = 0;
     this.touchEndX = 0;
-    // this.sideOffset = 30;
+    this.sideOffset = sideOffset;
 
-    try {
-      this.initElements({
-        sliderClassName,
-        nextButtonClassName,
-        prevButtonClassName,
-      });
-      this.checkElements(sliderClassName);
-      this.initListeners();
-      this.initAdaptiveSideOffset(sideOffset);
-    } catch (e) {
-      console.error(e);
+    const { sliderEl, leftButton, rightButton } = this.getElements({
+      sliderClassName,
+      nextButtonClassName,
+      prevButtonClassName,
+    });
+
+    if (sliderEl && leftButton && rightButton) {
+      this.sliderEl = sliderEl;
+      this.sliderWrapper = this.sliderEl.children[0];
+      this.slidesList = this.sliderWrapper.children;
+      this.buttons = {
+        left: leftButton,
+        right: rightButton,
+      };
+    } else {
+      throw new Error("Something wrong with initializing elements");
     }
     this.adjustSliderOffset();
   }
@@ -41,14 +75,21 @@ export default class AnvioSlider {
     return this.lastSlide.offsetWidth + this.lastSlide.offsetLeft;
   }
 
-  initAdaptiveSideOffset(sideOffset) {
+  initAdaptiveSideOffset(sideOffset: { [n: number]: number } | number) {
     const offset = sideOffset;
-    const funcIfObject = () => {
-      let result = "empty result";
+    const getSliderOffset = () => {
+      let result = 0;
 
-      for (let size in offset) {
-        if (document.querySelector("body").offsetWidth > size)
-          result = offset[size];
+      for (let size in offset as any) {
+        const s: number = Number(size);
+        const body = document.querySelector("body");
+
+        if (
+          body &&
+          body.offsetWidth > Number(size) &&
+          typeof offset === "object"
+        )
+          result = offset[s];
       }
 
       return result;
@@ -56,7 +97,7 @@ export default class AnvioSlider {
 
     Object.defineProperties(this, {
       sideOffset: {
-        get: typeof sideOffset !== "object" ? () => offset : funcIfObject,
+        get: typeof sideOffset !== "object" ? () => offset : getSliderOffset,
       },
     });
   }
@@ -76,31 +117,49 @@ export default class AnvioSlider {
     this.sliderWrapper.style.transform = `translateX(${-final}px)`;
   }
 
-  initElements(config) {
-    this.sliderEl = document.querySelector(config.sliderClassName);
-    this.sliderWrapper = this.sliderEl.children[0];
-    this.slidesList = this.sliderWrapper.children;
-    this.buttons = {
-      left: document.querySelector(config.prevButtonClassName),
-      right: document.querySelector(config.nextButtonClassName),
-    };
+  getElements(elementsName: {
+    sliderClassName: string;
+    nextButtonClassName: string;
+    prevButtonClassName: string;
+  }) {
+    const sliderEl = document.querySelector<HTMLElement>(
+      elementsName.sliderClassName
+    );
+    const leftButton = document.querySelector<HTMLElement>(
+      elementsName.prevButtonClassName
+    );
+    const rightButton = document.querySelector<HTMLElement>(
+      elementsName.nextButtonClassName
+    );
+
+    return { sliderEl, leftButton, rightButton };
   }
 
-  checkElements(sliderClassName) {
-    const errorMsgBase = `Anvio Slider (${sliderClassName})`;
-    if (!this.sliderEl) {
-      throw new Error(errorMsgBase + "invalid slider's classname");
-    }
-    if (!this.sliderWrapper) {
-      throw new Error(errorMsgBase + "doesn't has a track element");
-    }
-    if (!this.sliderWrapper.children.length) {
-      throw new Error(errorMsgBase + "doesn't have slides");
-    }
-    if (!this.buttons.left || !this.buttons.right) {
-      throw new Error(errorMsgBase + "invalid button classnames");
-    }
-  }
+  // initElements(config) {
+  //   this.sliderEl = document.querySelector(config.sliderClassName);
+  //   this.sliderWrapper = this.sliderEl.children[0];
+  //   this.slidesList = this.sliderWrapper.children;
+  //   this.buttons = {
+  //     left: document.querySelector(config.prevButtonClassName),
+  //     right: document.querySelector(config.nextButtonClassName),
+  //   };
+  // }
+
+  // checkElements(sliderClassName) {
+  //   const errorMsgBase = `Anvio Slider (${sliderClassName})`;
+  //   if (!this.sliderEl) {
+  //     throw new Error(errorMsgBase + "invalid slider's classname");
+  //   }
+  //   if (!this.sliderWrapper) {
+  //     throw new Error(errorMsgBase + "doesn't has a track element");
+  //   }
+  //   if (!this.sliderWrapper.children.length) {
+  //     throw new Error(errorMsgBase + "doesn't have slides");
+  //   }
+  //   if (!this.buttons.left || !this.buttons.right) {
+  //     throw new Error(errorMsgBase + "invalid button classnames");
+  //   }
+  // }
 
   initListeners() {
     const vibrate = () => navigator.vibrate(10);

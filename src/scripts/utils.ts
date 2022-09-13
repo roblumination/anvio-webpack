@@ -1,8 +1,8 @@
-export function clamp(min, val, max) {
+export function clamp(min: number, val: number, max: number) {
   return Math.min(Math.max(val, min), max);
 }
 
-export function delay(delayInms) {
+export function delay(delayInms: number) {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(2);

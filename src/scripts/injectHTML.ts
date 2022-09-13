@@ -20,6 +20,6 @@ const requiredPages = [
   const body = document.querySelector("body");
 
   requiredPages.forEach((page) => {
-    body.innerHTML += page;
+    if (body) body.innerHTML += page;
   });
 })();

@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ESLintPlugin = require("eslint-webpack-plugin");
 
 const loaders = [
+  // --- styles ---
   {
     test: /\.css$/,
     use: ["style-loader", "css-loader"],
@@ -24,7 +25,14 @@ const loaders = [
     ],
   },
 
-  //comment below for prod
+  // --- typescript ---
+  {
+    test: /\.tsx?$/,
+    use: "ts-loader",
+    exclude: /node_modules/,
+  },
+
+  // --- html ---
   {
     test: /\.html$/i,
     loader: "html-loader",
@@ -44,9 +52,6 @@ module.exports = {
   // --- I/O ---
   entry: {
     app: "./src/index.js",
-    // slider: "./src/scripts/singleSlider.js",
-    // sliders: "./src/scripts/slidersInit.js",
-    // increaser: "./src/scripts/numberIncreaser.js",
     modalControll: "./src/scripts/other/modalControl.js",
     customAccord: "./src/scripts/other/customAccordion.js",
     simpleSlider: "./src/scripts/other/singleSlider.js",
@@ -62,6 +67,9 @@ module.exports = {
   devtool: "inline-source-map",
   optimization: {
     runtimeChunk: "single",
+  },
+  resolve: {
+    extensions: [".tsx", ".ts", ".js"],
   },
 
   // --- loaders & plugins ----

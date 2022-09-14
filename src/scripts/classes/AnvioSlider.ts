@@ -21,9 +21,10 @@ interface AnvioSliderConfiguration {
 
 export default class AnvioSlider {
   currentSlideNumber: number;
-  wrapperOffset: number;
-  touchStartX: number;
-  touchEndX: number;
+  wrapperOffset: number = 0;
+  touchStartX: number = 0;
+  touchEndX: number = 0;
+  sideOffsetSet: { [n: number]: number };
   sideOffset: number;
   slidesList: Array<HTMLElement>;
   sliderEl: HTMLElement;
@@ -42,14 +43,14 @@ export default class AnvioSlider {
     initSlideNumber = 0,
   }: AnvioSliderConfiguration) {
     this.currentSlideNumber = initSlideNumber;
-    this.wrapperOffset = 0;
-    this.touchStartX = 0;
-    this.touchEndX = 0;
 
     if (typeof sideOffset === "number") {
       this.sideOffset = sideOffset;
-    } /*if (typeof sideOffset === "object")*/ else {
-      this.sideOffset = this.initAdaptiveSideOffset(sideOffset);
+      this.sideOffsetSet = { 0: sideOffset };
+    } else {
+      this.sideOffsetSet = sideOffset;
+      this.sideOffset = 0;
+      this.initAdaptiveSideOffset();
     }
 
     const { sliderEl, leftButton, rightButton } = this.getElements({
@@ -61,7 +62,6 @@ export default class AnvioSlider {
     if (sliderEl && leftButton && rightButton) {
       this.sliderEl = sliderEl;
       this.sliderWrapper = [].slice.call(this.sliderEl.children)[0];
-      // this.sliderWrapper = [...this.sliderEl.children];
       this.slidesList = [].slice.call(this.sliderWrapper.children);
       this.buttons = {
         left: leftButton,
@@ -70,6 +70,7 @@ export default class AnvioSlider {
     } else {
       throw new Error("Something wrong with initializing elements");
     }
+    this.initListeners();
     this.adjustSliderOffset();
   }
 
@@ -81,16 +82,15 @@ export default class AnvioSlider {
     return this.lastSlide.offsetWidth + this.lastSlide.offsetLeft;
   }
 
-  initAdaptiveSideOffset(sideOffset: { [n: number]: number }) {
-    // const offset = sideOffset;
+  private initAdaptiveSideOffset() {
     const getSliderOffset = () => {
       let result = 0;
 
-      for (let size in sideOffset as any) {
-        const s: number = Number(size);
+      for (let size in this.sideOffsetSet) {
+        const s = Number(size);
         const body = document.querySelector("body");
 
-        if (body && body.offsetWidth > Number(size)) result = sideOffset[s];
+        if (body && body.offsetWidth > s) result = this.sideOffsetSet[s];
       }
 
       return result;
@@ -98,13 +98,12 @@ export default class AnvioSlider {
 
     Object.defineProperties(this, {
       sideOffset: {
-        get: () => getSliderOffset,
+        get: getSliderOffset,
       },
     });
-
-    return getSliderOffset();
   }
 
+  // Regular slides position setter.
   setAbsoluteWrapperOffset(offset: number) {
     const final = clamp(
       0 - this.sideOffset,
@@ -115,12 +114,13 @@ export default class AnvioSlider {
     this.sliderWrapper.style.transform = `translateX(${-final}px)`;
   }
 
+  // Used for touch events. Slides folows finger.
   setRelativeOffset(offset: number) {
     const final = this.wrapperOffset + offset;
     this.sliderWrapper.style.transform = `translateX(${-final}px)`;
   }
 
-  getElements(elementsName: {
+  private getElements(elementsName: {
     sliderClassName: string;
     nextButtonClassName: string;
     prevButtonClassName: string;
@@ -138,40 +138,16 @@ export default class AnvioSlider {
     return { sliderEl, leftButton, rightButton };
   }
 
-  // initElements(config) {
-  //   this.sliderEl = document.querySelector(config.sliderClassName);
-  //   this.sliderWrapper = this.sliderEl.children[0];
-  //   this.slidesList = this.sliderWrapper.children;
-  //   this.buttons = {
-  //     left: document.querySelector(config.prevButtonClassName),
-  //     right: document.querySelector(config.nextButtonClassName),
-  //   };
-  // }
-
-  // checkElements(sliderClassName) {
-  //   const errorMsgBase = `Anvio Slider (${sliderClassName})`;
-  //   if (!this.sliderEl) {
-  //     throw new Error(errorMsgBase + "invalid slider's classname");
-  //   }
-  //   if (!this.sliderWrapper) {
-  //     throw new Error(errorMsgBase + "doesn't has a track element");
-  //   }
-  //   if (!this.sliderWrapper.children.length) {
-  //     throw new Error(errorMsgBase + "doesn't have slides");
-  //   }
-  //   if (!this.buttons.left || !this.buttons.right) {
-  //     throw new Error(errorMsgBase + "invalid button classnames");
-  //   }
-  // }
-
-  initListeners() {
+  private initListeners() {
     const vibrate = () => navigator.vibrate(10);
 
     this.buttons.left.addEventListener("click", () => {
+      console.log("left");
       vibrate();
       this.prevSlide();
     });
     this.buttons.right.addEventListener("click", () => {
+      console.log("right");
       vibrate();
       this.nextSlide();
     });
@@ -188,18 +164,18 @@ export default class AnvioSlider {
     // this.initTouchListeners();
   }
 
-  handleTouchStart(e: TouchEvent) {
+  private handleTouchStart(e: TouchEvent) {
     // this.sliderWrapper.style.transition = "all 0.0s";
     this.disableTransitions();
     this.touchStartX = e.changedTouches[0].clientX;
   }
 
-  handleTouchMove(e: TouchEvent) {
+  private handleTouchMove(e: TouchEvent) {
     const touchOffsetX = e.changedTouches[0].clientX;
     this.setRelativeOffset(this.touchStartX - touchOffsetX);
   }
 
-  handleTouchEnd(e: TouchEvent) {
+  private handleTouchEnd(e: TouchEvent) {
     this.touchEndX = e.changedTouches[0].clientX;
     this.setAbsoluteWrapperOffset(
       this.wrapperOffset + (this.touchStartX - this.touchEndX)
@@ -226,7 +202,7 @@ export default class AnvioSlider {
     this.adjustSliderOffset();
   }
 
-  adjustSliderOffset() {
+  private adjustSliderOffset() {
     const offsetCurrentSlide =
       this.slidesList[this.currentSlideNumber].offsetLeft;
     const lastSlideOffsetFull =
@@ -255,15 +231,15 @@ export default class AnvioSlider {
     this.setAbsoluteWrapperOffset(finalOffset);
   }
 
-  enableTransitions() {
+  private enableTransitions() {
     this.sliderWrapper.style.transition = "all 0.5s";
   }
 
-  disableTransitions() {
+  private disableTransitions() {
     this.sliderWrapper.style.transition = "all 0s";
   }
 
-  updpateCurrentSlideNumber() {
+  private updpateCurrentSlideNumber() {
     this.currentSlideNumber = ~~(
       this.wrapperOffset / this.slidesList[0].offsetWidth
     );
